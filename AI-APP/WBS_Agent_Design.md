@@ -210,3 +210,7 @@ export class ExcelService {
 1.  **人员技能矩阵配置**：在前端设置页面配置团队成员及其擅长领域，传给后端作为 Prompt 的上下文。
 2.  **多轮对话调整**：如果初次拆解不满意，用户可以在前端输入修改意见，后端调用 LLM 进行 Refine（优化）。
 3.  **Webhook 集成**：当 TAPD 需求状态变更时，自动触发分析流程。
+
+
+企业微信Excel接口文档：
+https://developer.work.weixin.qq.com/document/path/99907#addrecord

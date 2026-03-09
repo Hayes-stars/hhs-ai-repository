@@ -1,3 +1,5 @@
 {
-  "disabledSkills": []
+  "disabledSkills": [
+    "code-reviewer"
+  ]
 }
