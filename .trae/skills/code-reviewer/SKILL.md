@@ -1,62 +1,62 @@
 ---
 name: code-reviewer
-description: Use this skill to review code. It supports both local changes (staged or working tree) and remote Pull Requests (by ID or URL). It focuses on correctness, maintainability, and adherence to project standards.
+description: 使用此技能来审查代码。它支持本地更改（暂存区或工作树）和远程 Pull Request（通过 ID 或 URL）。它专注于正确性、可维护性以及是否遵守项目标准。
 ---
 
-# Code Reviewer
+# 代码审查员 (Code Reviewer)
 
-This skill guides the agent in conducting professional and thorough code reviews for both local development and remote Pull Requests.
+此技能指导智能体对本地开发和远程 Pull Request 进行专业且彻底的代码审查。
 
-## Workflow
+## 工作流程
 
-### 1. Determine Review Target
-*   **Remote PR**: If the user provides a PR number or URL (e.g., "Review PR #123"), target that remote PR.
-*   **Local Changes**: If no specific PR is mentioned, or if the user asks to "review my changes", target the current local file system states (staged and unstaged changes).
+### 1. 确定审查目标
+*   **远程 PR**：如果用户提供了 PR 编号或 URL（例如，“Review PR #123”），则以该远程 PR 为目标。
+*   **本地更改**：如果没有提到具体的 PR，或者用户要求“审查我的更改”，则以当前本地文件系统状态（暂存和未暂存的更改）为目标。
 
-### 2. Preparation
+### 2. 准备工作
 
-#### For Remote PRs:
-1.  **Checkout**: Use the GitHub CLI to checkout the PR.
+#### 针对远程 PR：
+1.  **检出 (Checkout)**：使用 GitHub CLI 检出 PR。
     ```bash
     gh pr checkout <PR_NUMBER>
     ```
-2.  **Preflight**: Execute the project's standard verification suite to catch automated failures early.
+2.  **预检 (Preflight)**：执行项目的标准验证套件，以尽早发现自动化失败。
     ```bash
     npm run preflight
     ```
-3.  **Context**: Read the PR description and any existing comments to understand the goal and history.
+3.  **上下文**：阅读 PR 描述和任何现有的评论，以了解目标和历史背景。
 
-#### For Local Changes:
-1.  **Identify Changes**:
-    *   Check status: `git status`
-    *   Read diffs: `git diff` (working tree) and/or `git diff --staged` (staged).
-2.  **Preflight (Optional)**: If the changes are substantial, ask the user if they want to run `npm run preflight` before reviewing.
+#### 针对本地更改：
+1.  **识别更改**：
+    *   检查状态：`git status`
+    *   阅读差异：`git diff`（工作树）和/或 `git diff --staged`（暂存区）。
+2.  **预检（可选）**：如果更改内容较多，询问用户是否要在审查前运行 `npm run preflight`。
 
-### 3. In-Depth Analysis
-Analyze the code changes based on the following pillars:
+### 3. 深入分析
+基于以下支柱分析代码更改：
 
-*   **Correctness**: Does the code achieve its stated purpose without bugs or logical errors?
-*   **Maintainability**: Is the code clean, well-structured, and easy to understand and modify in the future? Consider factors like code clarity, modularity, and adherence to established design patterns.
-*   **Readability**: Is the code well-commented (where necessary) and consistently formatted according to our project's coding style guidelines?
-*   **Efficiency**: Are there any obvious performance bottlenecks or resource inefficiencies introduced by the changes?
-*   **Security**: Are there any potential security vulnerabilities or insecure coding practices?
-*   **Edge Cases and Error Handling**: Does the code appropriately handle edge cases and potential errors?
-*   **Testability**: Is the new or modified code adequately covered by tests (even if preflight checks pass)? Suggest additional test cases that would improve coverage or robustness.
+*   **正确性**：代码是否实现了其既定目标，且没有 Bug 或逻辑错误？
+*   **可维护性**：代码是否整洁、结构良好，并且易于理解和未来修改？考虑代码清晰度、模块化以及是否遵守既定的设计模式等因素。
+*   **可读性**：代码是否有良好的注释（必要时），并且格式是否符合我们项目的编码风格指南？
+*   **效率**：更改是否引入了明显的性能瓶颈或资源低效问题？
+*   **安全性**：是否存在任何潜在的安全漏洞或不安全的编码实践？
+*   **边缘情况和错误处理**：代码是否适当地处理了边缘情况和潜在错误？
+*   **可测试性**：新的或修改后的代码是否有足够的测试覆盖（即使预检检查通过）？建议可以提高覆盖率或稳健性的额外测试用例。
 
-### 4. Provide Feedback
+### 4. 提供反馈
 
-#### Structure
-*   **Summary**: A high-level overview of the review.
-*   **Findings**:
-    *   **Critical**: Bugs, security issues, or breaking changes.
-    *   **Improvements**: Suggestions for better code quality or performance.
-    *   **Nitpicks**: Formatting or minor style issues (optional).
-*   **Conclusion**: Clear recommendation (Approved / Request Changes).
+#### 结构
+*   **摘要**：审查的高层级概览。
+*   **发现**：
+    *   **关键问题 (Critical)**：Bug、安全问题或破坏性更改。
+    *   **改进建议 (Improvements)**：关于更好的代码质量或性能的建议。
+    *   **琐碎问题 (Nitpicks)**：格式或轻微的风格问题（可选）。
+*   **结论**：明确的建议（批准 / 请求更改）。
 
-#### Tone
-*   Be constructive, professional, and friendly.
-*   Explain *why* a change is requested.
-*   For approvals, acknowledge the specific value of the contribution.
+#### 语气
+*   具有建设性、专业且友好。
+*   解释 *为什么* 请求更改。
+*   对于批准，认可贡献的具体价值。
 
-### 5. Cleanup (Remote PRs only)
-*   After the review, ask the user if they want to switch back to the default branch (e.g., `main` or `master`).
+### 5. 清理（仅限远程 PR）
+*   审查结束后，询问用户是否要切换回默认分支（例如 `main` 或 `master`）。
